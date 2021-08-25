@@ -1,0 +1,63 @@
+# Information ---------------------------------------------------------------- #
+# Author :	Julien Lenoir
+# Github :	Blackounet
+# Created : June 2020
+# Updated :
+# ---------------------------------------------------------------------------- #
+
+
+
+# BASE PARAMETERS --------------------------------------- #
+
+cpu_allocated = 1
+	# Default : None
+	# Possible values :
+		# None : Uses the all the CPU of the computer
+		# Any positive integer value, represents the number of CPU to use
+	# Note : More CPU used means less computation time
+
+memory_allocated = .0
+	# Default : 8.0
+	# Possible values :
+		# 0.0 : Uses all the available memory
+		# Any positive_value
+	# Note : The amount of memory available for the program to run, in GB
+	# Warning : At least 4GB are required, for small grid spacing (> 0.5) or many CPU (> 8), 8GB are advised
+
+# ------------------------------------------------------- #
+
+
+
+# FEATURES REQUESTED ------------------------------------ #
+
+run_comparison = False
+	# Default : True
+	# Possible values :
+		# True : Runs a structure comparison analysis
+		# False : Do not run a structure comparison analysis
+
+run_solubilization = True
+	# Default : True
+	# Possible values :
+		# True : Runs a structure solubilization analysis
+		# False : Do not run a structure solubilization analysis
+
+# ------------------------------------------------------- #
+
+
+
+# PARSING PARAMETERS ------------------------------------ #
+
+path_to_comparison_parameters = config/comparison_parameters.txt
+	# Default : config/comparison_parameters.txt
+	# Possible values :
+		# Any path leading to a valid file of parameters for structures comparison
+	# Note : A default value is set in the program, you can let this path empty
+
+path_to_solubilization_parameters = config/solubilization_parameters.txt
+	# Default : config/solubilization_parameters.txt
+	# Possible values :
+		# Any path leading to a valid file of parameters for structure solubilization
+	# Note : A default value is set in the program, you can let this path empty
+
+# ------------------------------------------------------- #

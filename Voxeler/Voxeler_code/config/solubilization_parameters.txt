@@ -1,0 +1,248 @@
+# Information ---------------------------------------------------------------- #
+# Author :	Julien Lenoir
+# Github :	Blackounet
+# Created : June 2020
+# Updated :
+# ---------------------------------------------------------------------------- #
+
+
+
+# INPUT PATHS ------------------------------------------- #
+
+path_to_PDB_directory = inout_solubilization/input/
+	# Default : inout_solubilization/input/
+	# Possible values :
+		# Any path leading to a existing, or not, directory for PDB files to solubilize
+	# Note : A default value is set in the program, you can let this path empty
+
+# ------------------------------------------------------- #
+
+
+
+# OUTPUT PATHS ------------------------------------------ #
+
+path_to_output_directory = inout_solubilization/output/
+	# Default : inout_solubilization/output/
+	# Possible values :
+		# Any path leading to a existing, or not, directory for solubilized structures
+	# Note : A default value is set in the program, you can let this path empty
+
+# ------------------------------------------------------- #
+
+
+
+# SOLUBILIZATION PARAMETERS ----------------------------- #
+
+distance_between_points = 1.5
+	# Default : 0.25
+	# Possible values :
+		# Any positive value, represents the angstrom distance between two points of the grid
+	# Note : Small values makes the comparison slower
+	# Note : It may be interesting to use a value similar to the structure resolution
+	# Warning : Distances inferiors to 0.2 A are time and memory consuming
+
+grid_geometry = Sphere
+	# Default : Sphere
+	# Possible values :
+		# Sphere : Uses the default sphere formula for the euclidean geometry
+		# Taxicab : Uses the taxicab geometry, where the distance between 2 points is the sum of the absolute differences of their coordinates
+		# Uniform : Applies an uniform scaling in the euclidean geometry
+	# Note : Approximation used for the Van der Waals radius determination
+
+use_randomax = True
+    # Default : False
+        # Launch the simulation several times with the use of random in order to predict the best position for water
+
+launch_number = 3
+    # Default : 1
+        # Number of times the solubilization is launched with randomax.
+        # Note : Only used with randomax.
+
+occurrences_threshold = 0.5
+    # Default : 0.5
+        # Minimal proportion of appearance necessary for the position to be considered as robust
+        # Note : Only used with randomax.
+
+solubilization_method = Itermax
+	# Default : Itermax
+	# Possible values :
+		# IterMax : Iteratively place, by decreasing score, water molecules, resolving collisions by a random placement within the possible positions
+        # TODO randomax : Itermax but with a random part, water molecule have a probability of being placed or not, in order to determine a robustness score
+	# Note : There is currently only one solubilization algorithm
+
+random_threshold = 0.5
+    # Default : 1
+    # Possible values :
+        # Probability of placing a water molecule. 0 : No molecule is places, 1 : All the molecules are placed.
+        # Is only used with randomax.
+
+solubilization_radius = 1.0, 2.5
+	# Default : 1.0, 2.5
+	# Possible values :
+		# Min and max distance in Angstroms used for water placement multiplied by the VdW radius mean of water (1.4 A)
+	# Note : The tolerance for steric clashes and maximum solvation distance is expressed in water radius
+
+max_neighbor_distance = 3.0
+	# Default : 3.0
+	# Possible values :
+		# Any positive value
+	# Note : Maximal distance in Angstroms for the search of neighbours
+	# Note : Due to the Van der Waals radius of atoms, it is advised to use a value superior to 2.0 + the max solubilization radius
+	# Warning : Computation with a high neighbor distance may be VERY time consuming
+
+max_neighbor_number = 3
+	# Default : 3
+	# Possible values :
+		# Any positive value, not superior to 10
+	# Note : Defines the maximum number of neighbours considered
+	# Warning : Due to lack of data, only the first 10 neighbours have an impact on the water placement
+
+scoring_metric = euclidean
+	# Default : euclidean
+	# Possible values :
+		# euclidean : sqrt(sum((x - y)^2)) (Default)
+		# manhattan : sum(|x - y|) (A lot faster, far less precise)
+		# minkowski : sum(|x - y|^p)^(1/p) (A bit faster, roughly the same precision)
+	# Note : Formulas used for the determination of the neighbouring atoms in the scoring process
+
+only_first_neighbor = False
+	# Default : False
+	# Possible values :
+		# True : Only considers the nearest neighbor encountered by a residue
+		# False : Considers multiples neighbours for each residue
+	# Note : ?
+
+scoring_per_residue = True
+	# Default : True
+	# Possible values :
+		# True : Only considers one atom (the nearest) per residue
+		# False : Considers as many atom per residues as possible
+	# Note :
+
+mean_score = True
+	# Default : True
+	# Possible values :
+		# True : Uses the mean of the neighbour interaction scores for placing water
+		# False : Uses the sum of the neighbour interaction scores for placing water
+	# Note :
+
+min_water_score = 0.25
+	# Default : 0.25
+	# Possible values :
+		# Any positive value between 0 and 1 : place water with a score at least superior to this value
+		# -1.0 : No minimal water score required for water placement
+	# Note : Defines a minimal score for valid water molecules
+	# Note : The best possible score is 1, thus, there is only one position with this score
+
+# ------------------------------------------------------- #
+
+
+
+# ATOM SCORING ------------------------------------ #
+
+electronic_densities_folder = resources/densities
+	# Default : resources/densities
+	# Possible values :
+		# Any path leading to the electronic densities directory
+	# Note : These files are used by the scoring function
+
+normalize_electronic_densities = False
+	# Default : False
+	# Possible values :
+		# True : Normalizes the electronic densities
+		# False : Do not normalizes densities
+	# Note : Normalized electronic densities are normalized for each possible interactions independently
+	# Warning : Risk of accuracy and comparison loss if normalized
+
+occurrence_b_factor = False
+    # Default : False
+	# Possible values :
+		# False : Write the score associated with the water molecule in the PDB file
+		# True : Only used with RandoMax : Write the percentage of appearance of the molecule
+		during the several solubilizations.
+
+# ------------------------------------------------------- #
+
+
+
+# PARSING PARAMETERS ------------------------------------ #
+
+discard_atom = False
+	# Default : False
+	# Possible values :
+		# True : Ignores any ATOM line in a PDB file
+		# False : Keeps the ATOM lines
+
+discard_hetatm = True
+	# Default : True
+	# Possible values :
+		# True : Ignores any HETATM line in a PDB file
+		# False : Keeps the HETATM lines
+
+discard_hydrogen = True
+	# Default : True
+	# Possible values :
+		# True : Ignores any Hydrogen element in a PDB file
+		# False : Keeps the Hydrogen element
+
+discard_water = True
+	# Default : True
+	# Possible values :
+		# True : Ignores any water molecules in a PDB file
+		# False : Keeps the water molecules
+
+discard_alternative = False
+	# Default : False
+	# Possible values :
+		# True : Ignores any atom alternative position in a PDB file
+		# False : Keeps the atom alternative position
+
+chain_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific chain to keep with other being discarded
+		# A, B, C : Any list of chain ID to keep, with the other being discarded
+
+chain_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific chain to keep with other being discarded
+		# A, B, C : Any list of chain ID to discard, with the other being kept
+
+residue_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue to keep with other being discarded
+		# MET, TYR : Any list of residues type to keep, with the other being discarded
+
+residue_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue to keep with other being discarded
+		# MET, TYR : Any list of residues type to discard, with the other being kept
+
+residue_id_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue id to keep with other being discarded
+		# 2, 5 : Any list of residues id to keep, with the other being discarded
+
+residue_id_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue id to keep with other being discarded
+		# 2, 5 : Any list of residues id to discard, with the other being kept
+
+atom_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific atom type to keep with other being discarded
+		# H, Fe, C : Any list of atom type to keep, with the other being discarded
+
+atom_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific atom type to keep with other being discarded
+		# H, Fe, C : Any list of atom type to discard, with the other being kept
+
+# ------------------------------------------------------- #

@@ -1,0 +1,198 @@
+# Information ---------------------------------------------------------------- #
+# Author :	Julien Lenoir
+# Github :	Blackounet
+# Created : June 2020
+# Updated :
+# ---------------------------------------------------------------------------- #
+
+
+
+# INPUT PATHS ------------------------------------------- #
+
+path_to_PDB_directory = inout_comparison/input/
+	# Default : inout_comparison/input/
+	# Possible values :
+		# Any path leading to a existing, or not, directory for superimposed PDB files
+	# Note : A default value is set in the program, you can let this path empty
+
+# ------------------------------------------------------- #
+
+
+
+# OUTPUT PATHS ------------------------------------------ #
+
+path_to_output_directory = inout_comparison/output/
+	# Default : inout_comparison/output/
+	# Possible values :
+		# Any path leading to a existing, or not, directory for comparison files
+	# Note : A default value is set in the program, you can let this path empty
+
+# ------------------------------------------------------- #
+
+
+
+# COMPARISON PARAMETERS --------------------------------- #
+
+distance_between_points = 0.25
+	# Default : 0.25
+	# Possible values :
+		# Any positive value, represents the angstrom distance between two points of the grid
+	# Note : Small values makes the comparison slower
+	# Note : It may be interesting to use a value similar to the structure resolution
+	# Warning : Distances inferiors to 0.05 A are time and memory consuming
+
+consider_elements = True
+	# Default : True
+	# Possible values :
+		# True : Compares by distinguishing between different types of atoms
+		# False : Compares only the volumes of the structures, without considering the types of elements
+	# Note : Comparing the volumes only increases the similarity score, often generating a stronger tree
+
+comparison_normalisation = Max
+	# Default : Max
+	# Possible values :
+		# Max : Normalizes the similarity score with the maximal number of occupied points between the grids
+		# Min : Normalizes the similarity score with the minimal number of occupied points between the grids
+	# Note :
+
+grid_geometry = Sphere
+	# Default : Sphere
+	# Possible values :
+		# Sphere : Uses the default sphere formula for the euclidean geometry
+		# Taxicab : Uses the taxicab geometry, where the distance between 2 points is the sum of the absolute differences of their coordinates
+		# Uniform : Applies an uniform scaling in the euclidean geometry
+	# Note : Approximation used for the Van der Waals radius determination
+
+# ------------------------------------------------------- #
+
+
+
+# TREE GENERATION --------------------------------------- #
+
+tree_name = None
+	# Default : None
+	# Possible values :
+		# None : Uses the default file name for the output
+		# Any possible file name (without the file extension)
+	# Note : The name of the output tree to be generated in the output directory
+
+show_tree = True
+	# Default : True
+	# Possible values :
+		# True : Displays the tree obtained at the end of the comparison
+		# False : Do not displays the tree
+
+tree_shape = Classic
+	# Default : Classic
+	# Possible values :
+		# Classic : The tree expands from left to right
+		# Semicircular : The tree has a semicircular shape, covering 180 degrees
+		# Circular : The tree has a circular shape, covering 360 degrees
+	# Note : The shape of the tree to be generated
+
+only_topology = False
+	# Default : False
+	# Possible values :
+		# True : Only displays the topology of the tree without displaying the similarity
+		# False : Displays the tree and branch lengths according to the similarity scores
+	# Note : Displaying the branch length is useless
+
+leaf_name = True
+	# Default : True
+	# Possible values :
+		# True : Displays the leaf names
+		# False : Do not displays the leaf names
+	# Note :
+
+branch_length = False
+	# Default : True
+	# Possible values :
+		# True : Displays the length of the branch
+		# False : Do not displays the length of the branch
+	# Note : The value on the branch indicates the similarity score, where 0 is 0% and 1 100%
+
+# ------------------------------------------------------- #
+
+
+
+# PARSING PARAMETERS ------------------------------------ #
+
+discard_atom = False
+	# Default : False
+	# Possible values :
+		# True : Ignores any ATOM line in a PDB file
+		# False : Keeps the ATOM lines
+
+discard_hetatm = True
+	# Default : True
+	# Possible values :
+		# True : Ignores any HETATM line in a PDB file
+		# False : Keeps the HETATM lines
+
+discard_hydrogen = True
+	# Default : True
+	# Possible values :
+		# True : Ignores any Hydrogen element in a PDB file
+		# False : Keeps the Hydrogen element
+
+discard_water = True
+	# Default : True
+	# Possible values :
+		# True : Ignores any water molecules in a PDB file
+		# False : Keeps the water molecules
+
+discard_alternative = False
+	# Default : False
+	# Possible values :
+		# True : Ignores any atom alternative position in a PDB file
+		# False : Keeps the atom alternative position
+
+chain_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific chain to keep with other being discarded
+		# A, B, C : Any list of chain ID to keep, with the other being discarded
+
+chain_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific chain to keep with other being discarded
+		# A, B, C : Any list of chain ID to discard, with the other being kept
+
+residue_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue to keep with other being discarded
+		# MET, TYR : Any list of residues type to keep, with the other being discarded
+
+residue_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue to keep with other being discarded
+		# MET, TYR : Any list of residues type to discard, with the other being kept
+
+residue_id_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue id to keep with other being discarded
+		# 2, 5 : Any list of residues id to keep, with the other being discarded
+
+residue_id_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific residue id to keep with other being discarded
+		# 2, 5 : Any list of residues id to discard, with the other being kept
+
+atom_white_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific atom type to keep with other being discarded
+		# H, Fe, C : Any list of atom type to keep, with the other being discarded
+
+atom_black_list =
+	# Default :
+	# Possible values :
+		# : (Empty char) No specific atom type to keep with other being discarded
+		# H, Fe, C : Any list of atom type to discard, with the other being kept
+
+# ------------------------------------------------------- #
